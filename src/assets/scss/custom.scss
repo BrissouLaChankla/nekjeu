@@ -1,0 +1,14 @@
+// modify theme colors map
+
+$primary:#3AC3CE;
+$secondary:#2E3192;
+
+
+$link-decoration:none;
+
+//Hamburger
+$hamburger-layer-color:white;
+$hamburger-layer-width: 30px;
+
+// import to set changes
+@import "~bootstrap/scss/bootstrap";
