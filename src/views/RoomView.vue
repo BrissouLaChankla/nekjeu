@@ -74,7 +74,7 @@ methods: {
     },
     startGame() {
         this.loading = true;
-        console.log("loading vrai");
+        //console.log("loading vrai");
         this.socket.emit('askStartGame', this.userInformations.idOfGame);
     },
      // Clipboard
@@ -125,13 +125,13 @@ mounted() {
             // The guest doesn't have nick so redirect him to home with roomId to join 
             this.socket.off('isInvited');
             this.$router.push({ name: 'Home', params: {idOfGameInvited: roomId, isInvited: true} })
-            console.log("Il te faut rentrer un pseudo avant")
+            //console.log("Il te faut rentrer un pseudo avant")
         } else {
             // Ready to join the room 
             this.isInvited = true;
             this.socket.emit('joinRoomAsInvited');
             
-            console.log("Parfait tu rejoins la partie");
+            //console.log("Parfait tu rejoins la partie");
         }
     })
     this.createOrJoinRoom();
@@ -180,7 +180,7 @@ mounted() {
         
         this.$router.push({ name: 'Game', params: {id: players[0].roomAttached, "allMembers":this.allMembers} });
         
-        console.log("Partie lancée");
+        //console.log("Partie lancée");
 
     })
 }

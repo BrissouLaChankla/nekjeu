@@ -45,8 +45,6 @@ export default {
             confetti.destroyTarget(true);
 
             setTimeout(() => confetti.execute(), 200);
-
-            console.log(confetti)
         }
     }
 }

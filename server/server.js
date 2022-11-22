@@ -17,10 +17,10 @@ let rooms = {}
 io.on("connection", (socket) => {
 
 
-console.log(rooms);
+//console.log(rooms);
 
 
-console.log("Un user connecté")
+//console.log("Un user connecté")
 
 
     socket.on('createOrJoinRoom', (userInformation) => {
@@ -31,7 +31,7 @@ console.log("Un user connecté")
       socket.data.score = 0;
       socket.data.ishost = false;
 
-      console.log("Cet user s'appelle : " + socket.data.username)
+      //console.log("Cet user s'appelle : " + socket.data.username)
 
       if(io.sockets.adapter.rooms.has(socket.data.roomAttached)) {
         // S'il rejoint
@@ -42,7 +42,7 @@ console.log("Un user connecté")
         // S'il crée 
 
         socket.data.ishost = true;
-        console.log("Il crée une nouvelle partie !")
+        //console.log("Il crée une nouvelle partie !")
         socket.join(socket.data.roomAttached);
 
       }
@@ -59,7 +59,6 @@ console.log("Un user connecté")
         socket.on("disconnecting", () => {
         io.in(socket.data.roomAttached).emit("error", "😅 Ton pote s'est déco, faut recréer la partie !");
           delete rooms[socket.data.roomAttached];
-          console.log(console.log(rooms))
         });
 
 
@@ -76,7 +75,7 @@ console.log("Un user connecté")
         
       
 
-        const songs = getSongs(2);
+        const songs = getSongs(10);
         let indexOfSong = 0;
         songs.then(function(songs) {
 
@@ -109,14 +108,14 @@ console.log("Un user connecté")
       // Check si la réponse est bonne, fais +100 + vitesse
       if(answerInfos.albumIdChosed == rooms[answerInfos.roomId].songs[rooms[answerInfos.roomId].indexOfSong].album_id) {
         socket.data.score = socket.data.score + 100 + answerInfos.bonusSpeed;
-        console.log(socket.data.score)
+        //console.log(socket.data.score)
       }
       
       let players = findPlayersInRoom(answerInfos.roomId);
       players.then(function (players) {
         io.in(answerInfos.roomId).emit("updatePlayers", players.map(player => player.data));
 
-        console.log('Nouvelle réponse', rooms[answerInfos.roomId].answers, players.length)
+        //console.log('Nouvelle réponse', rooms[answerInfos.roomId].answers, players.length)
 
         if(rooms[answerInfos.roomId].answers == players.length) {
           if(rooms[answerInfos.roomId].indexOfSong < 6) {
@@ -137,12 +136,12 @@ console.log("Un user connecté")
 
 // _______________________________________________  GAME END  ______________________________________________
   socket.on('disconnect', (socket) => {
-    console.log('Deconnexion');
+    //console.log('Deconnexion');
   });
 });
 
 httpServer.listen(3000, function() {
-  console.log("serveur lancé !")
+  //console.log("serveur lancé !")
 });
 
 async function getListOfPlayersInRoom(roomId) {
@@ -170,12 +169,12 @@ async function getListOfPlayersInRoom(roomId) {
 
 const getHostOfGame = async (io, idOfRoom) => {
   const sockets = await io.in(idOfRoom).fetchSockets();
-  console.log("Il veut rejoindre la partie de " +sockets[0].data.username + " mais n'a pas de pseudo");
+  //console.log("Il veut rejoindre la partie de " +sockets[0].data.username + " mais n'a pas de pseudo");
 }
 
 
 async function sendMusic(roomId, songs, indexOfSong) {
-  console.log('Envoi des musiques', roomId, indexOfSong)
+  //console.log('Envoi des musiques', roomId, indexOfSong)
 
   io.in(roomId).emit("sendMusic", {
     song:songs[indexOfSong],

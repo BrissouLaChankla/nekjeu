@@ -79,15 +79,15 @@ export default {
                     title:"Feu",
                     src: require('../assets/albums/feu.webp')
                 },
+                {
+                    id:2,
+                    title:"Cyborg",
+                    src: require('../assets/albums/cyborg.webp')
+                },
                   {
                     id:3,
                     title:"L.E.V",
                     src: require('../assets/albums/lev.webp')
-                },
-                  {
-                    id:2,
-                    title:"Cyborg",
-                    src: require('../assets/albums/cyborg.webp')
                 },
                   {
                     id:4,
@@ -118,7 +118,7 @@ export default {
 
 
         this.socket.on("sendMusic", (song) => {
-            console.log(song);
+
             this.indexOfSong = song.indexOfSong;
 
             let allAlbums = document.querySelectorAll('.tilt-album');
@@ -148,11 +148,14 @@ export default {
             setTimeout(() => {
                 audio.pause();
                     Swal.fire({
-                        title: 'Préparez-vous',
-                        text: 'La prochaine musique va démarrer',
-                        icon: 'info',
-                         showCloseButton: false,
-                          showConfirmButton: false,
+                        // Changer ça vvvvvvvvvvvvvvvvvvvvvvvvvvvvv pas réussi à faire un indexOf sur tableau de 2nd degré
+                        imageUrl: this.albums[song.song.album_id-1].src,
+                        imageHeight: 200,
+                        imageAlt: 'Album de Nekfeu',
+                        title: 'C\était <em>'+ song.song.title +'</em> de l\'album <strong>' + song.song.album.name +'</strong>',
+                        text: 'Attention ! La prochaine musique va démarrer...',
+                        showCloseButton: false,
+                        showConfirmButton: false,
                         timer:3000,
                         allowOutsideClick: false,
                         allowEscapeKey: false,
@@ -179,7 +182,7 @@ export default {
             
             let bonusSpeed = Math.floor((Date.now() - this.timeSelected)/100); 
 
-                console.log("timer terminé !")
+                //console.log("timer terminé !")
 
             // Envoie la réponse avec le score
             let answerInfos = {
@@ -189,7 +192,7 @@ export default {
                 bonusSpeed:bonusSpeed,
                 albumIdChosed: albumIdChosed,
             }
-            console.log(answerInfos);
+            //console.log(answerInfos);
 
                 this.showCountdown = false;
 
