@@ -107,6 +107,18 @@ mounted() {
     let avatar_2 = document.querySelector('.player2-avatar');
 
 
+    this.socket.on("error", () => {
+        if(this.$route.path != '/end') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Aïe...',
+                text: 'Ton adversaire a quitté, il faut recréer la partie 😅',
+                confirmButtonText: '<a class="text-white" href="/">Revenir à l\'accueil</a>',
+                allowOutsideClick: false
+            })
+        }
+    })
+
     this.socket.on("isInvited", (roomId) => {
          
         if(this.username === undefined) {
@@ -116,7 +128,6 @@ mounted() {
             console.log("Il te faut rentrer un pseudo avant")
         } else {
             // Ready to join the room 
-            // this.loading = false;
             this.isInvited = true;
             this.socket.emit('joinRoomAsInvited');
             

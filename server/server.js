@@ -13,11 +13,15 @@ const io = new Server(httpServer, {
 
 let rooms = {}
 
+
 io.on("connection", (socket) => {
+
+
 console.log(rooms);
 
 
 console.log("Un user connecté")
+
 
     socket.on('createOrJoinRoom', (userInformation) => {
       // Attaches les infos au socket
@@ -51,6 +55,15 @@ console.log("Un user connecté")
       players.then(function(players) {
         // Permet de mettre à jour le front 
         io.in(socket.data.roomAttached).emit("roomIsReady", players);
+
+        socket.on("disconnecting", () => {
+        io.in(socket.data.roomAttached).emit("error", "😅 Ton pote s'est déco, faut recréer la partie !");
+          delete rooms[socket.data.roomAttached];
+          console.log(console.log(rooms))
+        });
+
+
+
       })
     });
 
@@ -63,7 +76,7 @@ console.log("Un user connecté")
         
       
 
-        const songs = getSongs(10);
+        const songs = getSongs(2);
         let indexOfSong = 0;
         songs.then(function(songs) {
 
