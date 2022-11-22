@@ -148,12 +148,12 @@ async function getListOfPlayersInRoom(roomId) {
   return players;
 }
 
-function getListOfActiveRooms(io) {
-  const arr = Array.from(io.sockets.adapter.rooms);
-  const filtered = arr.filter(room => !room[1].has(room[0]))
-  const res = filtered.map(i => i[0]);
-  return res;
-}
+// function getListOfActiveRooms(io) {
+//   const arr = Array.from(io.sockets.adapter.rooms);
+//   const filtered = arr.filter(room => !room[1].has(room[0]))
+//   const res = filtered.map(i => i[0]);
+//   return res;
+// }
 
 const getHostOfGame = async (io, idOfRoom) => {
   const sockets = await io.in(idOfRoom).fetchSockets();

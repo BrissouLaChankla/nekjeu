@@ -1,5 +1,6 @@
 <template>
-      <div class="container">
+        <div class="container">
+          <Loader v-if="loading" />
         <div class="row">
             <div class="col-5">
                 <div class="avatar-section">
@@ -45,15 +46,20 @@
 </template>
 
 <script>
+import Loader from "@/components/Loader.vue";
 
 export default {
     props:["username", "avatar"],
     data() {
         return {
+            loading:true,
             isInvited: false,
             userInformations:{},
             allMembers:[]
         }
+    },
+    components: {
+        Loader,
     },
 methods: {
        createOrJoinRoom() {
@@ -67,6 +73,8 @@ methods: {
         this.socket.emit('createOrJoinRoom', userInformations)
     },
     startGame() {
+        this.loading = true;
+        console.log("loading vrai");
         this.socket.emit('askStartGame', this.userInformations.idOfGame);
     },
      // Clipboard
@@ -77,25 +85,9 @@ methods: {
                 
 },
 beforeMount() {
-    
-    this.socket.on("isInvited", (roomId) => {
-        if(this.username === undefined) {
-            // The guest doesn't have nick so redirect him to home with roomId to join 
-            this.socket.off('isInvited');
-            this.$router.push({ name: 'Home', params: {idOfGameInvited: roomId, isInvited: true} })
-            console.log("Il te faut rentrer un pseudo avant")
-        } else {
-            // Ready to join the room 
-            this.isInvited = true;
-            this.socket.emit('joinRoomAsInvited');
-            
-            console.log("Parfait tu rejoins la partie");
-        }
-    })
-    this.createOrJoinRoom();
+  
 },
 mounted() {
-
     // Set local variables 
    
     localStorage.setItem('username', this.username);
@@ -103,7 +95,9 @@ mounted() {
     localStorage.setItem('avatar', this.avatar);
     localStorage.setItem('roomId', window.location.href.split("/").pop());
 
-
+    if(localStorage.getItem('player') == 1 && localStorage.getItem('username') != undefined) {
+        this.loading = false;
+    }
 
 
     // 
@@ -113,6 +107,24 @@ mounted() {
     let avatar_2 = document.querySelector('.player2-avatar');
 
 
+    this.socket.on("isInvited", (roomId) => {
+         
+        if(this.username === undefined) {
+            // The guest doesn't have nick so redirect him to home with roomId to join 
+            this.socket.off('isInvited');
+            this.$router.push({ name: 'Home', params: {idOfGameInvited: roomId, isInvited: true} })
+            console.log("Il te faut rentrer un pseudo avant")
+        } else {
+            // Ready to join the room 
+            // this.loading = false;
+            this.isInvited = true;
+            this.socket.emit('joinRoomAsInvited');
+            
+            console.log("Parfait tu rejoins la partie");
+        }
+    })
+    this.createOrJoinRoom();
+    
  
     this.socket.on("roomIsReady", (allMembers) => {
         // On attend que namee1 lance la partie...
@@ -142,6 +154,8 @@ mounted() {
             avatar_2.src = allMembers[1].avatar
             if(namee1) {
                 namee1.innerText = allMembers[0].username
+                this.loading = false;
+
             }
 
         // Set local variables
