@@ -17,10 +17,10 @@ let rooms = {}
 io.on("connection", (socket) => {
 
 
-//console.log(rooms);
+console.log(rooms);
 
 
-//console.log("Un user connecté")
+console.log("Un user connecté")
 
 
     socket.on('createOrJoinRoom', (userInformation) => {

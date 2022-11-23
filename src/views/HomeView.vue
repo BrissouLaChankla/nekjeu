@@ -11,7 +11,7 @@
         "
       >
         <div class="avatar-section form-group">
-          <img src="" alt="Avatar" class="avatar" />
+          <img src="" alt="Avatar" width="250" height="250" class="avatar" />
           <div
             class="btn rounded-circle shadow-sm reload-icon text-primary"
             @click="generateAvatar()"
@@ -76,6 +76,7 @@ export default {
     };
   },
   methods: {
+ 
    async generateAvatar() {
       let avatar = document.querySelector(".avatar");
       var reader = new FileReader();
@@ -117,6 +118,9 @@ export default {
     } else {
       localStorage.setItem('player', 1);
     }
+    // Pas bonne manière de faire, variable globale :/ 
+    localStorage.setItem('volume', 0.2);
+
   }
 };
 </script>

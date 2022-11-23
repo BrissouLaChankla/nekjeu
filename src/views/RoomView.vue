@@ -66,8 +66,8 @@ methods: {
             let url = window.location.href.split("/").pop().split('?')[0];
             let userInformations = {
               'idOfGame': url,
-              'username': this.username,
-              'avatar': this.avatar
+              'username': localStorage.getItem('username'),
+              'avatar': localStorage.getItem('avatar')
             }
             this.userInformations = userInformations;
         this.socket.emit('createOrJoinRoom', userInformations)
@@ -89,10 +89,13 @@ beforeMount() {
 },
 mounted() {
     // Set local variables 
-   
-    localStorage.setItem('username', this.username);
+   if(this.username != undefined && this.avatar != undefined){
+       localStorage.setItem('username', this.username);
+       localStorage.setItem('avatar', this.avatar);
+    }
+
+    
     localStorage.setItem('score', 0);
-    localStorage.setItem('avatar', this.avatar);
     localStorage.setItem('roomId', window.location.href.split("/").pop());
 
     if(localStorage.getItem('player') == 1 && localStorage.getItem('username') != undefined) {
@@ -100,11 +103,16 @@ mounted() {
     }
 
 
+
+
     // 
     let pseudo_1 = document.querySelector('.player1-name');
     let avatar_1 = document.querySelector('.player1-avatar');
     let pseudo_2 = document.querySelector('.player2-name');
     let avatar_2 = document.querySelector('.player2-avatar');
+
+    avatar_1.src = localStorage.getItem('avatar');
+    pseudo_1.innerText = localStorage.getItem('username');
 
 
     this.socket.on("error", () => {

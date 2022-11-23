@@ -1,5 +1,9 @@
 <template>
     <div class="container game d-flex flex-column justify-content-center flex-grow-1">
+        <div class="volume d-flex align-items-center">
+            <img class="icon" src="../assets/volume.svg" alt="Volume Icon">
+            <input v-model="volumeNb" type="range" class="ms-3 form-range" step="0.02" min="0" max="0.5">
+        </div>
         <div class="d-flex align-items-center justify-content-between mb-2">
             <div>
                 <div class="d-flex align-items-center text-white" style="width:150px">
@@ -67,8 +71,12 @@ export default {
     components: {
         Countdown,
     },
+    
     data() {
         return {
+
+            audio:null,
+            volumeNb:0.2,
             players:undefined,
             showCountdown:false,
             timeSelected:0,
@@ -97,6 +105,13 @@ export default {
             ]
         }
     },
+    watch: {
+      volumeNb: function(val) {
+            if(this.audio){
+                this.audio.volume = val;
+            }
+        },
+      },
     methods: {
         selectAlbum(event) {
             // 
@@ -129,30 +144,30 @@ export default {
 
             lyrics.innerText = song.song.lyrics
             this.showCountdown = true;
-            var audio = new Audio('https://crud.nekjeu.fr/storage/albums/'+ song.song.album.name +'/'+song.song.audio_src); // path to file
-
+            this.audio = new Audio('https://crud.nekjeu.fr/storage/albums/'+ song.song.album.name +'/'+song.song.audio_src); // path to file
+            this.audio.volume = this.volumeNb;
             const fadeAudio = setInterval(() => {
-            const fadePoint = audio.duration - 1;
-            if ((audio.currentTime >= fadePoint) && (audio.volume !== 0)) {
-                audio.volume -= 0.1
+            const fadePoint = this.audio.duration - 1;
+            if ((this.audio.currentTime >= fadePoint) && (this.audio.volume !== 0)) {
+                this.audio.volume -= 0.001
             }
 
-            if (audio.volume < 0.003) {
+            if (this.audio.volume < 0.003) {
                 clearInterval(fadeAudio);
             }
             }, 100);
 
 
-            audio.play();
+            this.audio.play();
 
             setTimeout(() => {
-                audio.pause();
+                this.audio.pause();
                     Swal.fire({
                         // Changer ça vvvvvvvvvvvvvvvvvvvvvvvvvvvvv pas réussi à faire un indexOf sur tableau de 2nd degré
                         imageUrl: this.albums[song.song.album_id-1].src,
                         imageHeight: 200,
                         imageAlt: 'Album de Nekfeu',
-                        title: 'C\était <em>'+ song.song.title +'</em> de l\'album <strong>' + song.song.album.name +'</strong>',
+                        title: 'C\'était <em>'+ song.song.title +'</em> de l\'album <strong>' + song.song.album.name +'</strong>',
                         text: 'Attention ! La prochaine musique va démarrer...',
                         showCloseButton: false,
                         showConfirmButton: false,
@@ -273,6 +288,16 @@ export default {
     #border {
         fill: white;
     }
+}
+
+.volume {
+    position: absolute;
+    top: 3rem;
+    left: 50%;
+    transform: translate(-50%, -50% );
+  .icon {
+    height: 25px;
+  }
 }
 
 .bg-game {

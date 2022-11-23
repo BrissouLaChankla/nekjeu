@@ -44,7 +44,7 @@ warning
             <hr>
             <h3>Contact</h3>
             <p>J'espère que tu apprécies ce petit jeu, comme tu l'as vu le projet n'est aujourd'hui qu'en beta et je travaille actuellement sur de nouveaux modes.</p>
-            <p>Cela dit si tu as remarqué des bugs, des erreurs ou que tu as des idées d'améliorations, je prends avec plaisir donc n'hésite pas à me le faire savoir sur    <a href="https://www.instagram.com/brice.vue/" target="_blank">
+            <p>Cela dit si tu as remarqué des bugs, des erreurs ou que tu as des idées d'améliorations, je prends avec plaisir donc n'hésite pas à me MP sur    <a href="https://www.instagram.com/brice.vue/" target="_blank">
                    
                  mon Instagram</a> directement c'est le plus simple pour moi 😇 </p>
             </div>
@@ -55,7 +55,7 @@ warning
         showConfirmButton:false
       });
     },
-  },
+  }
 };
 </script>
 
