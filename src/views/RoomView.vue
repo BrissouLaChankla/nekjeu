@@ -47,6 +47,7 @@
 
 <script>
 import Loader from "@/components/Loader.vue";
+import {Howl, Howler} from 'howler';
 
 export default {
     props:["username", "avatar"],
@@ -88,6 +89,14 @@ beforeMount() {
   
 },
 mounted() {
+
+    // set sound
+    const pop = new Howl({
+                src: [require('../assets/pop.wav')],
+                html5: true
+    });
+
+
     // Set local variables 
    if(this.username != undefined && this.avatar != undefined){
        localStorage.setItem('username', this.username);
@@ -177,6 +186,8 @@ mounted() {
 
             }
 
+
+        pop.play();
         // Set local variables
         this.allMembers = JSON.stringify(allMembers);
 

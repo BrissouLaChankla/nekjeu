@@ -65,6 +65,7 @@
 import VanillaTilt from 'vanilla-tilt';
 import Countdown from "@/components/Countdown.vue";
 import Swal from 'sweetalert2' 
+import {Howl, Howler} from 'howler';
 
 export default {
     props:["allMembers"],
@@ -107,9 +108,7 @@ export default {
     },
     watch: {
       volumeNb: function(val) {
-            if(this.audio){
-                this.audio.volume = val;
-            }
+            Howler.volume(val);
         },
       },
     methods: {
@@ -144,24 +143,30 @@ export default {
 
             lyrics.innerText = song.song.lyrics
             this.showCountdown = true;
-            this.audio = new Audio('https://crud.nekjeu.fr/storage/albums/'+ song.song.album.name +'/'+song.song.audio_src); // path to file
-            this.audio.volume = this.volumeNb;
-            const fadeAudio = setInterval(() => {
-            const fadePoint = this.audio.duration - 1;
-            if ((this.audio.currentTime >= fadePoint) && (this.audio.volume !== 0)) {
-                this.audio.volume -= 0.001
-            }
+            // this.audio = new Audio('https://crud.nekjeu.fr/storage/albums/'+ song.song.album.name +'/'+song.song.audio_src); // path to file
+            var audio = new Howl({
+                src: ['https://crud.nekjeu.fr/storage/albums/'+ song.song.album.name +'/'+song.song.audio_src],
+                html5: true
+            });
+            
+            Howler.volume(this.volumeNb);
+            // const fadeAudio = setInterval(() => {
+            // const fadePoint = audio.duration - 1;
+            // if ((audio.currentTime >= fadePoint) && (howler.volume !== 0)) {
+            //     Howler.volume -= 0.001
+            // }
 
-            if (this.audio.volume < 0.003) {
-                clearInterval(fadeAudio);
-            }
-            }, 100);
+            // if (Howler.volume < 0.003) {
+            //     clearInterval(fadeAudio);
+            // }
+            // }, 100);
+            // audio.fade(this.volumeNb, 0, 1000);
 
 
-            this.audio.play();
+            audio.play();
 
             setTimeout(() => {
-                this.audio.pause();
+                audio.pause();
                     Swal.fire({
                         // Changer ça vvvvvvvvvvvvvvvvvvvvvvvvvvvvv pas réussi à faire un indexOf sur tableau de 2nd degré
                         imageUrl: this.albums[song.song.album_id-1].src,
@@ -252,9 +257,17 @@ export default {
             opacity: 0;
             transition: opacity 0.5s ease;
             z-index: 20;
+            font-size: 2em;
+            letter-spacing: 2px;
+        }
+
+        @media only screen and (min-width: 600px) {
+            .titre-album {
             font-size: 3em;
             letter-spacing: 6px;
         }
+        }
+        
     }
 
     .overlay2 {

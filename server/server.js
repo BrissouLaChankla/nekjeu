@@ -17,10 +17,9 @@ let rooms = {}
 io.on("connection", (socket) => {
 
 
-console.log(rooms);
 
 
-console.log("Un user connecté")
+// console.log("Un user connecté")
 
 
     socket.on('createOrJoinRoom', (userInformation) => {
@@ -30,6 +29,8 @@ console.log("Un user connecté")
       socket.data.roomAttached = userInformation.idOfGame;
       socket.data.score = 0;
       socket.data.ishost = false;
+
+      const nbOfMusics = 10;
 
       //console.log("Cet user s'appelle : " + socket.data.username)
 
@@ -75,10 +76,10 @@ console.log("Un user connecté")
         
       
 
-        const songs = getSongs(10);
+        const songs = getSongs(nbOfMusics);
         let indexOfSong = 0;
         songs.then(function(songs) {
-
+          console.log(songs.length);
           rooms[roomId] = {
             // == songs:songs
             songs,
@@ -118,7 +119,7 @@ console.log("Un user connecté")
         //console.log('Nouvelle réponse', rooms[answerInfos.roomId].answers, players.length)
 
         if(rooms[answerInfos.roomId].answers == players.length) {
-          if(rooms[answerInfos.roomId].indexOfSong < 6) {
+          if(rooms[answerInfos.roomId].indexOfSong < nbOfMusics+1) {
             sendMusic(answerInfos.roomId, rooms[answerInfos.roomId].songs, ++rooms[answerInfos.roomId].indexOfSong)
           } else {
             io.in(answerInfos.roomId).emit("endGame", players.map(player => player.data));

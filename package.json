@@ -10,6 +10,7 @@
     "bootstrap": "^5.2.0",
     "core-js": "^3.8.3",
     "hamburgers": "^1.2.1",
+    "howler": "^2.2.3",
     "node-fetch": "^2.6.1",
     "socket.io": "^4.5.1",
     "socket.io-client": "^4.5.1",
