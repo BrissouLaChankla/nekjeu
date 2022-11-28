@@ -19,7 +19,7 @@ io.on("connection", (socket) => {
 
 
 
-// console.log("Un user connecté")
+console.log("Un user connecté")
 
 
     socket.on('createOrJoinRoom', (userInformation) => {
@@ -76,7 +76,7 @@ io.on("connection", (socket) => {
         
       
 
-        const songs = getSongs(nbOfMusics);
+        const songs = getSongs(10);
         let indexOfSong = 0;
         songs.then(function(songs) {
           console.log(songs.length);
@@ -100,6 +100,14 @@ io.on("connection", (socket) => {
       
 
     })
+
+    socket.on('askRevenge', (roomId) => {
+      socket.to(roomId).emit("revengeAsked");
+    })
+
+    socket.on('revengeAccepted', (players) => {
+      console.log(players);
+    })
     // _______________________________________________ GAME START ______________________________________________
     
 
@@ -119,11 +127,10 @@ io.on("connection", (socket) => {
         //console.log('Nouvelle réponse', rooms[answerInfos.roomId].answers, players.length)
 
         if(rooms[answerInfos.roomId].answers == players.length) {
-          if(rooms[answerInfos.roomId].indexOfSong < nbOfMusics+1) {
+          if(rooms[answerInfos.roomId].indexOfSong < 1) {
             sendMusic(answerInfos.roomId, rooms[answerInfos.roomId].songs, ++rooms[answerInfos.roomId].indexOfSong)
           } else {
             io.in(answerInfos.roomId).emit("endGame", players.map(player => player.data));
-            
           }
         }
       })

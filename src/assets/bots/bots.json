@@ -1,0 +1,64 @@
+[
+    {
+            "id": 1,
+            "name": "Snoopy",
+            "img": "scooby.webp",
+            "phrase": "(Nek-quoi ?)",
+            "emoji": "🐶",
+            "score":0,
+            "ratioAnswers":25,
+            "minMaxScore": [
+                130, 150
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Theo",
+            "img": "theo.webp",
+            "phrase": "(Découvre Nekfeu)",
+            "emoji": "🫠",
+            "score":0,
+            "ratioAnswers":50,
+            "minMaxScore": [
+                130, 150
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Greg",
+            "img": "greg.webp",
+            "phrase": "(Il se débrouille)",
+            "emoji": "💪",
+            "score":0,
+            "ratioAnswers":65,
+            "minMaxScore": [
+                150, 210
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Brissou",
+            "img": "brice.webp",
+            "phrase": "(Bon courage...)",
+            "emoji": "🔥",
+            "score":0,
+            "ratioAnswers":85,
+            "minMaxScore": [
+                150, 210
+            ]
+
+        },
+        {
+            "id": 5,
+            "name": "Nekfeu",
+            "img": "nekfeu.webp",
+            "phrase": "(Intestable)",
+            "emoji": "☠️",
+            "score":0,
+            "ratioAnswers":100,
+            "minMaxScore": [
+                170, 210
+            ]
+        }
+
+    ]

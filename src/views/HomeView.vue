@@ -43,23 +43,43 @@
         Rejoindre la partie
 
           </router-link>
-        
-         <router-link v-else :to="{
+        <div v-else class="text-center mt-3
+           ">
+
+       
+         <router-link :to="{
           name: 'Room', 
           params: { id: this.idOfGame, avatar: this.avatar, username: this.username }
           }" :class="{'disabled': !this.username}" class="
             btn btn-light btn-lg
             shadow-sm
             font-weight-bold
-            mt-3
-            px-3
+            
             submit
             text-primary
           ">
         Créer la partie
 
           </router-link>
-      
+          <small class="d-block text-white my-2">ou</small>
+          <router-link :to="{
+          name: 'Robot', 
+          params: { avatar: this.avatar, username: randomName() }
+          }" class="
+            submit
+          ">
+          <div class="btn btn-outline-light d-flex align-items-center text-primary">
+<small>
+  Joue contre l'ordinateur
+
+</small>
+            <span class="material-symbols-rounded ms-2">
+              smart_toy
+            </span>
+          </div>
+
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -76,7 +96,12 @@ export default {
     };
   },
   methods: {
- 
+    randomName() {
+      if(this.username == "") {
+        return "Moi";
+      }
+      return this.username;
+    },
    async generateAvatar() {
       let avatar = document.querySelector(".avatar");
       var reader = new FileReader();

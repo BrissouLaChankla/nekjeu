@@ -4,10 +4,7 @@
       <a class="navbar-brand" href="/">
         <img alt="Nekjeu logo" src="../assets/logo.webp" class="logo" />
       </a>
-      <span
-        @click="openInfo()"
-        class="material-symbols-rounded fw-bold text-white h1 pointer"
-      >
+      <span @click="openInfo()" class="material-symbols-rounded fw-bold text-white pointer">
         info
       </span>
     </div>
@@ -52,7 +49,7 @@ warning
             `,
 
         showCloseButton: true,
-        showConfirmButton:false
+        showConfirmButton: false
       });
     },
   }
@@ -77,6 +74,7 @@ warning
     padding-right: 10px;
     transition: all 0.3s ease-in-out;
   }
+
   span {
     align-self: center;
     transform: translateX(0px);
@@ -89,16 +87,19 @@ warning
     background: linear-gradient(to right, #ff3019 0%, #c90477 100%);
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
     border: 0;
+
     i {
       transform: translateX(22px);
       padding-right: 0;
       color: #fff;
     }
+
     span {
       transform: translateX(20px);
       opacity: 0;
     }
   }
+
   &:active {
     transform: scale(1);
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
@@ -107,7 +108,17 @@ warning
 
 nav {
   .logo {
-    width: 90px;
+    width: 80px;
   }
-}
+
+  @media only screen and (min-width: 600px) {
+    .logo {
+      width: 90px;
+    }
+  }
+
+    .material-symbols-rounded {
+      font-size: 2.5rem;
+    }
+  }
 </style>

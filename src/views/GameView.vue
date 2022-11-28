@@ -169,7 +169,7 @@ export default {
                 audio.pause();
                     Swal.fire({
                         // Changer ça vvvvvvvvvvvvvvvvvvvvvvvvvvvvv pas réussi à faire un indexOf sur tableau de 2nd degré
-                        imageUrl: this.albums[song.song.album_id-1].src,
+                        imageUrl: this.albums.find(item => item.id == song.song.album_id).src,
                         imageHeight: 200,
                         imageAlt: 'Album de Nekfeu',
                         title: 'C\'était <em>'+ song.song.title +'</em> de l\'album <strong>' + song.song.album.name +'</strong>',
@@ -236,7 +236,7 @@ export default {
     top:-30px;
 }
 .selected-album {
-    border: 5px solid green;
+    border: 5px solid #3AC3CE;
 }
 .game {
 

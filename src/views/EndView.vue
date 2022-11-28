@@ -9,7 +9,8 @@
             <h6>Avec un score de {{this.players[0].score}}...</h6>
             <h2 class="my-5">{{this.players[0].username}} a gagné 👏</h2>
         </div>
-        <a href="/" class="btn btn-light">Retour à l'accueil</a>
+        <a href="/" class="btn btn-light mx-2">Retour à l'accueil</a>
+        <!-- <span @click="askRevenge()" class="btn btn-outline-light mx-2">Proposer une revanche</span> -->
     </div>
   </div>
 </template>
@@ -24,6 +25,11 @@ export default {
             players:null
         }
     },
+    methods:{
+        askRevenge() {
+            this.socket.emit('askRevenge', (this.players[0].roomAttached));
+        }
+    },
     mounted() {
         this.players = JSON.parse(this.allMembers);
 
@@ -31,6 +37,23 @@ export default {
         this.players = this.players.sort((a, b) => {
             return b['score'] - a['score'];
         });
+
+        this.socket.on("revengeAsked", () => {
+            Swal.fire({
+                title:'Une revanche ?',
+                text:'Tu vas pas le laisser gagner quand même..?',
+                icon: 'question',
+                showDenyButton: true,
+                confirmButtonText: 'Okkk !',
+                denyButtonText: `Non merci..`,
+            }).then((result) => {
+            if (result.isConfirmed) {
+                this.socket.emit('revengeAccepted', (this.players));
+                } 
+            })
+        });
+
+ 
     },
     updated() {
         if (document.getElementById('confetti')) {

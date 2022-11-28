@@ -3,6 +3,9 @@ import HomeView from '../views/HomeView.vue'
 import RoomView from '../views/RoomView.vue'
 import GameView from '../views/GameView.vue'
 import EndView from '../views/EndView.vue'
+import RobotRoomView from '../views/RobotRoom.vue'
+import RobotGameView from '../views/RobotGame.vue'
+import RobotEndView from '../views/RobotEnd.vue'
 
 const routes = [
   {
@@ -28,7 +31,26 @@ const routes = [
     name:'End',
     component:EndView,
     props:true
+  },
+  {
+    path: '/bot',
+    name: 'Robot',
+    component: RobotRoomView,
+    props:true
+  },
+  {
+    path: '/bot/game',
+    name: 'RobotGame',
+    component: RobotGameView,
+    props:true
+  },
+  {
+    path: '/bot/end',
+    name: 'RobotEnd',
+    component: RobotEndView,
+    props:true
   }
+
   // {
   //   path: '/about',
   //   name: 'about',
