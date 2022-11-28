@@ -13,8 +13,8 @@ const io = new Server(httpServer, {
 
 let rooms = {}
 
-
 io.on("connection", (socket) => {
+  let selectNbOfMusics = 10;
 
 
 
@@ -29,8 +29,6 @@ console.log("Un user connecté")
       socket.data.roomAttached = userInformation.idOfGame;
       socket.data.score = 0;
       socket.data.ishost = false;
-
-      const nbOfMusics = 10;
 
       //console.log("Cet user s'appelle : " + socket.data.username)
 
@@ -76,7 +74,7 @@ console.log("Un user connecté")
         
       
 
-        const songs = getSongs(10);
+        const songs = getSongs(selectNbOfMusics);
         let indexOfSong = 0;
         songs.then(function(songs) {
           console.log(songs.length);
@@ -95,11 +93,16 @@ console.log("Un user connecté")
          
         });
 
-
       });
       
 
     })
+
+    socket.on('changeNbOfMusics', (roomId, nb) => {
+      selectNbOfMusics = nb;
+      socket.to(roomId).emit("nbOfMusicsChanged", nb);
+
+    });
 
     socket.on('askRevenge', (roomId) => {
       socket.to(roomId).emit("revengeAsked");
@@ -127,7 +130,8 @@ console.log("Un user connecté")
         //console.log('Nouvelle réponse', rooms[answerInfos.roomId].answers, players.length)
 
         if(rooms[answerInfos.roomId].answers == players.length) {
-          if(rooms[answerInfos.roomId].indexOfSong < 1) {
+          if(rooms[answerInfos.roomId].indexOfSong < selectNbOfMusics-1) {
+            console.log("il y a " + selectNbOfMusics+ " musiques a jouer en tout")
             sendMusic(answerInfos.roomId, rooms[answerInfos.roomId].songs, ++rooms[answerInfos.roomId].indexOfSong)
           } else {
             io.in(answerInfos.roomId).emit("endGame", players.map(player => player.data));
@@ -199,10 +203,10 @@ async function sendMusic(roomId, songs, indexOfSong) {
 
 
 
-async function getSongs(nb=10) {
+async function getSongs(selectNbOfMusics) {
   const songs = [];
 
-  let rep = await fetch(`https://crud.nekjeu.fr/api/get/${nb}/songs`, { method: 'GET' });
+  let rep = await fetch(`https://crud.nekjeu.fr/api/get/${selectNbOfMusics+1}/songs`, { method: 'GET' });
   let reponse = await rep.json();
   return reponse;
   

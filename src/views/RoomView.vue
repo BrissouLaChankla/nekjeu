@@ -2,20 +2,28 @@
     <div>
     <div class="container">
         <Loader v-if="loading" />
-        <div class="row">
-            <div class="col-5">
-                <div class="avatar-section">
+        <h5 class="text-light text-center">Vous vous affronterez sur  
+                <select v-if="!this.isInvited && this.ready"  v-model="selectNbOfMusics" class="form-select form-select-sm mx-2" aria-label=".form-select-sm">
+                    <template v-for="index in this.maxMusicsToPlay" :key="index">   
+                        <option v-if="index%5 == 0 || index == 3" :value="index">{{index}}</option>
+                    </template> 
+                </select>
+                <strong v-else >
+                    {{this.selectNbOfMusics}}
+                </strong>
+                morceaux</h5>
+        <div class="row position-relative mt-4">
+            <img src="../assets/vs.webp" class="vs" alt="">
+            <div class="col-6">
+                <div class="avatar-section me-3">
                     <img :src="avatar" alt="Avatar" class="img-fluid avatar player1-avatar d-block m-auto">
                     <h3 class="text-center text-light player1-name">{{ username }}</h3>
                 </div>
             </div>
-            <div class="col-2 d-flex align-items-center p-0">
-                <div class="vs p-5"><img src="../assets/vs.webp" class="img-fluid" alt=""></div>
-            </div>
-            <div class="col-5 d-flex align-items-center justify-content-center colp2">
-                <div class="avatar-section">
+            <div class="col-6 d-flex align-items-center justify-content-center colp2">
+                <div class="avatar-section ms-3" :class="{'pending-section': !this.ready}">
                     <img src="../assets/pending.webp" alt="Avatar" class="img-fluid avatar player2-avatar img-pending d-block m-auto">
-                    <h3 class="text-center text-light player2-name">...</h3>
+                    <h3 class="text-center text-light player2-name mt-2">...</h3>
                 </div>
             </div>
 
@@ -60,11 +68,20 @@ export default {
     data() {
         return {
             loading: true,
+            ready:false,
             isInvited: false,
             userInformations: {},
-            allMembers: []
+            allMembers: [],
+            maxMusicsToPlay: 100,
+            selectNbOfMusics:10,
         }
     },
+    watch: {
+        selectNbOfMusics: function(val) {
+            let url = window.location.href.split("/").pop().split('?')[0];
+            this.socket.emit('changeNbOfMusics', url, val);
+        },
+      },
     components: {
         Loader,
     },
@@ -95,7 +112,10 @@ export default {
 
     },
     mounted() {
-
+        this.socket.on("nbOfMusicsChanged", (nb) => {
+            this.selectNbOfMusics = nb;
+        });
+        
         // set sound
         const pop = new Howl({
             src: [require('../assets/sounds/pop.wav')],
@@ -161,6 +181,9 @@ export default {
 
 
         this.socket.on("roomIsReady", (allMembers) => {
+
+            this.ready = true;
+
             // On attend que namee1 lance la partie...
             let namee1 = document.querySelector('.player1-namee');
             let launchbtn = document.querySelector('.launch-game');
@@ -203,7 +226,7 @@ export default {
         this.socket.on("startGame", (players) => {
 
 
-            this.$router.push({ name: 'Game', params: { id: players[0].roomAttached, "allMembers": this.allMembers } });
+            this.$router.push({ name: 'Game', params: { id: players[0].roomAttached, "allMembers": this.allMembers, selectNbOfMusics : this.selectNbOfMusics} });
 
             //console.log("Partie lancée");
 
@@ -215,8 +238,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.pending-section {
+    padding: 20px 10px 20px 28px;
+}
+.form-select-sm {
+    display: inline-block;
+    width: 70px;
+}
+.vs {
+    max-width: 120px;
+    width: 10vw;
+    padding: 0;
+    opacity: 60%;
+    position: absolute;
+    top: 40%;
+    right: 50%;
+    margin: 0;
+    transform: translate(50%);
+}
+
 .avatar {
-    max-height: 360px;
+    max-height: 300px;
 }
 
 .img-pending {

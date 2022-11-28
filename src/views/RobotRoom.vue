@@ -5,7 +5,7 @@
             <h5 class="text-light d-flex justify-content-center align-items-center">en 
                 <select v-model="selectNbOfMusics" class="form-select form-select-sm mx-2" aria-label=".form-select-sm">
                     <template v-for="index in this.maxMusicsToPlay" :key="index">   
-                        <option v-if="index%5 == 0 || index == 1 || index == 3" :value="index">{{index}}</option>
+                        <option v-if="index%5 == 0 || index == 3" :value="index">{{index}}</option>
                     </template> 
                 </select>
                 morceaux</h5>
@@ -36,7 +36,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="mb-3 text-center">
@@ -151,7 +150,7 @@ export default {
 }
 .vs {
     max-width: 120px;
-    width: 13vw;
+    width: 10vw;
     padding: 0;
     opacity: 60%;
     position: absolute;

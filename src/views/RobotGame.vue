@@ -35,7 +35,7 @@
 
         <div class="col text-white bg-game text-center pt-4 px-3 d-flex flex-column justify-content-around">
             <div class="theme-title text-center">
-                <span class="indexOfSong">{{ this.indexOfSong }}/{{ this.songs.length }}</span>
+                <span class="indexOfSong">{{ this.indexOfSong+1 }}/{{ this.songs.length }}</span>
                 <h3 class="text-primary bg-light shadow-sm px-3">Les classiques</h3>
             </div>
 

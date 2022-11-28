@@ -18,12 +18,9 @@
                 <h6 class="mt-4">Avec un score de {{this.playerInfo.score}}...</h6>
                 <h2 class="mt-4 mb-5">Tu as gagné 👏</h2>
 
-               
-
             </div>
             <!-- Bot gagne -->
             <div v-else>
-
                 <div class="position-relative d-inline">
                     <img :src="this.botInfo.avatar" id="confetti" class="me-3" style="max-width:300px" alt="">
                     <div class="loser">

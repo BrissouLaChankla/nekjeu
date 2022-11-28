@@ -6,14 +6,14 @@
         </div>
         <div class="d-flex align-items-center justify-content-between mb-2">
             <div>
-                <div class="d-flex align-items-center text-white" style="width:150px">
+                <div class="d-flex align-items-center text-white" style="width:130px">
                     <div class="flex-grow-1 text-center">
                         
                         <img :src="players[0].avatar" alt="Avatar" class="img-fluid avatar">
                         <h6 class="text-center mt-1">{{players[0].username}}</h6>
                     </div>
                     <h5 class="font-weight-bold ms-3">
-                        {{players[0].score}}pt 
+                        {{players[0].score}}<small>pt</small>
                     </h5>
                 </div>
             </div>
@@ -22,13 +22,13 @@
 
             </div>
             <div>
-                <div class="d-flex flex-row-reverse align-items-center text-white" style="width:150px">
+                <div class="d-flex flex-row-reverse align-items-center text-white" style="width:130px">
                     <div class="flex-grow-1 text-center">
                         <img :src="players[1].avatar" alt="Avatar" class="img-fluid avatar">
                         <h6 class="text-center mt-1">{{players[1].username}}</h6>
                     </div>
                     <h5 class="font-weight-bold me-3">
-                        {{players[1].score}}pt 
+                        {{players[1].score}}<small>pt</small> 
                     </h5>
                 </div>
             </div>
@@ -36,7 +36,7 @@
 
         <div class="col text-white bg-game text-center pt-4 px-3 d-flex flex-column justify-content-around">
                 <div class="theme-title text-center">
-                    <span class="indexOfSong">{{this.indexOfSong}}/10</span>
+                    <span class="indexOfSong">{{this.indexOfSong+1}}/{{selectNbOfMusics}}</span>
                     <h3 class="text-primary bg-light shadow-sm px-3">Les classiques</h3>
                 </div>
 
@@ -68,7 +68,7 @@ import Swal from 'sweetalert2'
 import {Howl, Howler} from 'howler';
 
 export default {
-    props:["allMembers"],
+    props:["allMembers","selectNbOfMusics"],
     components: {
         Countdown,
     },

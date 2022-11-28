@@ -9,14 +9,14 @@ let app = createApp(App)
 
 // 2. Assign the global variable before mounting
 // Local
-// app.config.globalProperties.socket = io("127.0.0.1:3000");
+app.config.globalProperties.socket = io("127.0.0.1:3000");
 
 // prod
-app.config.globalProperties.socket = io("wss://pacific-alive-wasabi.glitch.me/", {
-    headers:{
-        "user-agent": "Brice"
-    }
-});
+// app.config.globalProperties.socket = io("wss://pacific-alive-wasabi.glitch.me/", {
+//     headers:{
+//         "user-agent": "Brice"
+//     }
+// });
 
 
 
