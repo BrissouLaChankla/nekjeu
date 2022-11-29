@@ -223,8 +223,17 @@ export default {
         this.socket.on("endGame", (players) => {
             this.$router.push({ name: 'End', params: {"allMembers":JSON.stringify(players)} });
         })
+        let tilts = document.querySelectorAll(".tilt-album");
 
-    	VanillaTilt.init(document.querySelectorAll(".tilt-album"));
+    	VanillaTilt.init(tilts);
+        
+        var touchDevice = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
+        if(touchDevice) {
+            tilts.forEach((e) =>{
+                e.vanillaTilt.destroy();
+            })
+        }
+    
     }
 }
 </script>

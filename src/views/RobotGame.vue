@@ -251,7 +251,17 @@ export default {
         }
 
 
-        VanillaTilt.init(document.querySelectorAll(".tilt-album"));
+        let tilts = document.querySelectorAll(".tilt-album");
+
+        VanillaTilt.init(tilts);
+
+        var touchDevice = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
+        if(touchDevice) {
+            tilts.forEach((e) =>{
+                e.vanillaTilt.destroy();
+            })
+        }
+
     }
 }
 </script>
