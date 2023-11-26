@@ -103,24 +103,24 @@ export default {
       return this.username;
     },
    async generateAvatar() {
-      let avatar = document.querySelector(".avatar");
+       let avatar = document.querySelector(".avatar");
       var reader = new FileReader();
 
-      const response = await fetch(`https://avatars.dicebear.com/api/adventurer/${Math.floor(
-          Math.random() * 30
-        )}.svg`);
+      const response = await fetch(`https://api.dicebear.com/7.x/adventurer/svg?seed=${Math.floor(
+        Math.random() * 30
+      )}.svg`);
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const blob = await response.blob();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const blob = await response.blob();
 
-          reader.readAsDataURL(blob)
-          reader.onloadend = function ()  {
-            var base64data = reader.result;
-            avatar.src = base64data;
-            this.avatar = base64data;
-          }.bind(this);
+      reader.readAsDataURL(blob)
+      reader.onloadend = function () {
+        var base64data = reader.result;
+        avatar.src = base64data;
+        this.avatar = base64data;
+      }.bind(this);
 
       
     },
